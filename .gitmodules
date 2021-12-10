@@ -1,3 +1,18 @@
 [submodule "front"]
 	path = front
 	url = https://github.com/s-f-c-m/front-react-misiontic
+[submodule "users-api"]
+	path = users-api
+	url = https://github.com/s-f-c-m/users-api_python
+[submodule "clientes-api"]
+	path = clientes-api
+	url = https://github.com/s-f-c-m/clientes-api_java.git
+[submodule "productos-api"]
+	path = productos-api
+	url = https://github.com/s-f-c-m/productos_api_mintic.git
+[submodule "proveedores-api"]
+	path = proveedores-api
+	url = https://github.com/s-f-c-m/proveedores-api_java
+[submodule "ventas-api"]
+	path = ventas-api
+	url = https://github.com/Yamidy/ventasApi
