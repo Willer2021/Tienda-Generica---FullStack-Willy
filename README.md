@@ -8,8 +8,7 @@ docker-compose -v
 ```
 
 ## Ejecutar el proyecto
-Ejecutar por línea de comandos:
-La versión full corre un total de 16 contenedores:
+La versión full corre un total de 16 contenedores.Ejecutar por línea de comandos:
 ```Shell
 git clone --recurse-submodules https://github.com/s-f-c-m/TiendaGenerica-FullStack
 cd TiendaGenerica-FullStack
@@ -18,6 +17,8 @@ docker-compose up -d
 ```
 Para ejecutar una versión reducida con 8 (solo ciudad Bogotá y un módulo de Cali (clientes)), ejecutar
 ```Shell
+git clone --recurse-submodules https://github.com/s-f-c-m/TiendaGenerica-FullStack
+cd TiendaGenerica-FullStack
 docker-compose -f docker-compose-min.yml buil
 docker-compose -f docker-compose-min.yml up -d
 ```
