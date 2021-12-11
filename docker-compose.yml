@@ -1,9 +1,9 @@
 version: "3.9"
 
 x-common-variables: &common-variables
- - TG_MONGODB_HOST=${TG_MONGODB_HOST}
- - TG_MONGODB_PASSWORD=${TG_MONGODB_PASSWORD}
- - TG_MONGODB_USERNAME=${TG_MONGODB_USERNAME}
+  TG_MONGODB_HOST: ${TG_MONGODB_HOST}
+  TG_MONGODB_PASSWORD: ${TG_MONGODB_PASSWORD}
+  TG_MONGODB_USERNAME: ${TG_MONGODB_USERNAME}
 
 services:
   front:
@@ -25,7 +25,7 @@ services:
     ports:
       - 8082:8082
     environment:
-      - MONGO_DETAILS=mongodb://{TG_MONGODB_HOST}:27017
+      - MONGO_DETAILS=mongodb://${TG_MONGODB_USERNAME}:${TG_MONGODB_PASSWORD}@${TG_MONGODB_HOST}:27017
       - MONGO_DB=db_users
       - MONGO_COLLECTION=users
       - PYTHONPATH=/code
@@ -41,8 +41,8 @@ services:
       - 8085:8085
     environment:
       <<: *common-variables
-      - TG_CITY=BOG
-      - TG_PORT=8085
+      TG_CITY: BOG
+      TG_PORT: 8085
   proveedores_bogota:
     image: proveedores
     build:
@@ -54,8 +54,8 @@ services:
       - 8084:8084
     environment:
       <<: *common-variables
-      - TG_CITY=BOG
-      - TG_PORT=8084
+      TG_CITY: BOG
+      TG_PORT: 8084
   clientes_bogota:
     image: clientes
     build:
@@ -67,8 +67,8 @@ services:
       - 8083:8083
     environment:
       <<: *common-variables
-      - TG_CITY=BOG
-      - TG_PORT=8083
+      TG_CITY: BOG
+      TG_PORT: 8083
   ventas_bogota:
     image: ventas
     build:
@@ -80,8 +80,8 @@ services:
       - 8087:8087
     environment:
       <<: *common-variables
-      - TG_CITY=BOG
-      - TG_PORT=8087
+      TG_CITY: BOG
+      TG_PORT: 8087
   productos_cali:
     image: productos
     container_name: productos-cal
@@ -90,8 +90,8 @@ services:
       - 8095:8095
     environment:
       <<: *common-variables
-      - TG_CITY=CAL
-      - TG_PORT=8095
+      TG_CITY: CAL
+      TG_PORT: 8095
     depends_on: [productos_bogota]
   proveedores_cali:
     image: proveedores
@@ -101,8 +101,8 @@ services:
       - 8094:8094
     environment:
       <<: *common-variables
-      - TG_CITY=CAL
-      - TG_PORT=8094
+      TG_CITY: CAL
+      TG_PORT: 8094
     depends_on: [proveedores_bogota]
   clientes_cali:
     image: clientes
@@ -112,8 +112,8 @@ services:
       - 8093:8093
     environment:
       <<: *common-variables
-      - TG_CITY=CAL
-      - TG_PORT=8093
+      TG_CITY: CAL
+      TG_PORT: 8093
     depends_on: [clientes_bogota]
   ventas_cali:
     image: ventas
@@ -123,8 +123,8 @@ services:
       - 8097:8097
     environment:
       <<: *common-variables
-      - TG_CITY=CAL
-      - TG_PORT=8097
+      TG_CITY: CAL
+      TG_PORT: 8097
     depends_on: [ventas_bogota]
   productos_medellin:
     image: productos
@@ -134,8 +134,8 @@ services:
       - 8105:8105
     environment:
       <<: *common-variables
-      - TG_CITY=MED
-      - TG_PORT=8105
+      TG_CITY: MED
+      TG_PORT: 8105
     depends_on: [productos_bogota]
   proveedores_medellin:
     image: proveedores
@@ -145,8 +145,8 @@ services:
       - 8104:8104
     environment:
       <<: *common-variables
-      - TG_CITY=MED
-      - TG_PORT=8104
+      TG_CITY: MED
+      TG_PORT: 8104
     depends_on: [proveedores_bogota]
   clientes_medellin:
     image: clientes
@@ -156,8 +156,8 @@ services:
       - 8103:8103
     environment:
       <<: *common-variables
-      - TG_CITY=MED
-      - TG_PORT=8103
+      TG_CITY: MED
+      TG_PORT: 8103
     depends_on: [clientes_bogota]
   ventas_medellin:
     image: ventas
@@ -167,26 +167,31 @@ services:
       - 8107:8107
     environment:
       <<: *common-variables
-      - TG_CITY=MED
-      - TG_PORT=8107
+      TG_CITY: MED
+      TG_PORT: 8107
     depends_on: [ventas_bogota]
-  mongodb:
+  mongo:
     image: mongo
-    container_name: mongodb
+    container_name: mongo
     ports:
       - 27017:27017
     volumes:
       - data:/data
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${TG_MONGODB_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${TG_MONGODB_PASSWORD}
-  mongo-express:
+      - MONGO_INITDB_DATABASE=db_users
+  mongo-ui:
     image: mongo-express
-    container_name: mongo-express
+    container_name: mongo-ui
     restart: always
     ports:
       - 8081:8081
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=${TG_MONGODB_USERNAME}
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${TG_MONGODB_PASSWORD}
-      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_SERVER=mongo
+
+volumes:
+  data: {}
