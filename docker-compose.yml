@@ -15,8 +15,6 @@ services:
     hostname: front
     ports:
       - 80:80
-    environment:
-      - REACT_APP_API_HOST=${REACT_APP_API_HOST}
   usuarios:
     image: usuarios
     build:
