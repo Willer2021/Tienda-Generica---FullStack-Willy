@@ -19,7 +19,6 @@ Para ejecutar una versión reducida con 8 (solo ciudad Bogotá y un módulo de C
 git clone --recurse-submodules https://github.com/s-f-c-m/TiendaGenerica-FullStack
 cd TiendaGenerica-FullStack
 docker-compose -f docker-compose-min.yml up --build -d
-docker-compose -f docker-compose-min.yml up -d
 ```
 * Si se genera un error indicando que la imagen no ha sido encontrada y se require login (o similar), ejecutar docker-compose build y up por separado:
 ```Shell
