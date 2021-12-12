@@ -12,7 +12,7 @@ La versión full corre un total de 16 contenedores.Ejecutar por línea de comand
 ```Shell
 git clone --recurse-submodules https://github.com/s-f-c-m/TiendaGenerica-FullStack
 cd TiendaGenerica-FullStack
-docker-compose up --bulid -d
+docker-compose up --build -d
 ```
 Para ejecutar una versión reducida con 8 (solo ciudad Bogotá y un módulo de Cali (clientes)), ejecutar
 ```Shell
